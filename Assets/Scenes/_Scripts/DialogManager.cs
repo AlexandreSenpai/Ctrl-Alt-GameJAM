@@ -10,7 +10,7 @@ public class DialogManager : MonoBehaviour
     int pageIndex = 0;
     int wordIndex = 0;
 
-    [Range(1f,0.01f)] public float pageSpeed = 1f;
+    [Range(1f,0.001f)] public float pageSpeed = 1f;
     float timer = 0f;
 
     bool isReading = false;    // Ativa o evento de leitura
