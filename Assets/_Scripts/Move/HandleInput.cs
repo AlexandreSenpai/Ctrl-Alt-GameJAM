@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class HandleInput : MonoBehaviour {
 
+    private MoveController controller;
+
     void Start() {
-        
-    }
-    void Move() {
-        Move move = this.gameObject.GetComponent<Move>();
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        float moveVertical = Input.GetAxisRaw("Vertical");
-        Vector2 movement = new Vector2(moveHorizontal, moveVertical).normalized;
-        // move.MoveTo(Time.deltaTime * movement);
+        this.controller = this.gameObject.GetComponent<MoveController>();
     }
 
-    void Update() {
-        this.Move();
+    void FixedUpdate() {
+        if(this.controller != null && this.controller.IsBeingControlledByHuman()) {
+            float moveHorizontal = Input.GetAxisRaw("Horizontal");
+            float moveVertical = Input.GetAxisRaw("Vertical");
+            Vector2 movement = new Vector2(moveHorizontal, moveVertical).normalized;
+            this.controller.Move(Time.deltaTime * movement);
+        }
     }
+
 }

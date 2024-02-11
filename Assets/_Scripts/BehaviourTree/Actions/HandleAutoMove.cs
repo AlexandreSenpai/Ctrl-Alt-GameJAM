@@ -5,29 +5,32 @@ using UnityEngine;
 
 namespace BBUnity.Actions
 {
-    /// <summary>
-    /// It is a primitive action to associate a Vector3D to a variable.
-    /// </summary>
+
     [Action("Movement/HandleAutoMove")]
     public class HandleAutoMove : BasePrimitiveAction
     {
         
-        [InParam("entity")]
+        [InParam("Entity")]
         [Help("Entity object")]
         public GameObject entity;
 
-        [InParam("areaMin")]
-        public Vector2 areaMin;
+        private float radius = 3.0f;
 
-        [InParam("areaMax")]
-        public Vector2 areaMax;
-
-        private Move entityMoveScript;
+        private MoveController entityMoveScript;
         private Vector2 targetPosition;
+
+        void ChooseNextPosition() {
+            float theta = 2 * Mathf.PI * Random.value;
+            float r = this.radius * Mathf.Sqrt(Random.value);
+            float x = r * Mathf.Cos(theta);
+            float y = r * Mathf.Sin(theta);
+
+            targetPosition = new Vector2(x, y);
+        }
 
         public override void OnStart()
         {
-            entityMoveScript = entity.GetComponent<Move>();
+            entityMoveScript = entity.GetComponent<MoveController>();
             ChooseNextPosition();
         }
 
@@ -35,24 +38,18 @@ namespace BBUnity.Actions
         {
             if (entityMoveScript == null) return TaskStatus.FAILED;
 
-            // Mova a entidade em direção à posição alvo
-            entityMoveScript.MoveTo(targetPosition);
+            MoveStatus result = entityMoveScript.Move(targetPosition);
 
-            // Verifique se a entidade alcançou a posição alvo
-            if (Vector2.Distance(this.entity.transform.position, targetPosition) < 0.1f)
+            Debug.Log(result);
+
+            if (result == MoveStatus.COMPLETED || result == MoveStatus.BLOCKED)
             {
-                ChooseNextPosition();
+                this.ChooseNextPosition();
+                return TaskStatus.COMPLETED;
             }
 
             return TaskStatus.RUNNING;
         }
 
-        void ChooseNextPosition()
-        {
-            // Gera uma posição alvo aleatória dentro dos limites especificados
-            float randomX = Random.Range(areaMin.x, areaMax.x);
-            float randomY = Random.Range(areaMin.y, areaMax.y);
-            targetPosition = new Vector2(randomX, randomY);
-        }
     }
 }
