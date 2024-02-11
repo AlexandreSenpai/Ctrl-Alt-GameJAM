@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ public class MoveController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    private List<Vector2> lastFiveSteps = new List<Vector2>();
+
     void Start() {
         rb = GetComponent<Rigidbody2D>();
     }
@@ -41,10 +44,21 @@ public class MoveController : MonoBehaviour
     }
 
     public MoveStatus MoveTo(Vector2 position) {
-         if (!CanMove(position)) return MoveStatus.BLOCKED;
+        if (!CanMove(position)) return MoveStatus.BLOCKED;
 
-        rb.MovePosition(Vector2.MoveTowards(rb.position, position, this.speed * 5 * Time.deltaTime));
+        if(this.lastFiveSteps.Count >= 100) {
+            Debug.Log(this.lastFiveSteps.First());
+            Debug.Log(this.lastFiveSteps.Last());
+            if (Vector2.Distance(this.lastFiveSteps.First(), this.lastFiveSteps.Last()) < 1f) {
+                this.lastFiveSteps.Clear();
+                return MoveStatus.BLOCKED;
+            }
+        }
+
+        rb.MovePosition(Vector2.MoveTowards(rb.position, position, this.speed * Time.deltaTime));
         
+        this.lastFiveSteps.Add(this.rb.position);
+
         if(Vector2.Distance(rb.position, position) > 0.1f) return MoveStatus.ONGOING;
 
         return MoveStatus.COMPLETED;
