@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/BehaviorBricks/Actions/System/Basic/LogMessage.cs.meta
+guid: a3763962b349d1a4eb4030548190d430
+========
+guid: a5f767f8b32385942bbd374e45236d12
+>>>>>>>> 770fca1b8fe04d5df6dcbe76ba1df17b5e9e76f4:Assets/Scenes/_Scripts/Dialog.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
