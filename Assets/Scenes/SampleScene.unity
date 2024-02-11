@@ -308,15 +308,15 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1090506014}
-  - component: {fileID: 1090506013}
-  - component: {fileID: 1090506012}
-  m_Layer: 0
+<<<<<<< HEAD
+  - component: {fileID: 1867650528}
+  - component: {fileID: 1867650527}
+  m_Layer: 3
   m_Name: EventSystem
+>>>>>>> 770fca1b8fe04d5df6dcbe76ba1df17b5e9e76f4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!114 &1090506012
 MonoBehaviour:
@@ -454,6 +454,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
+=======
 --- !u!114 &1452375704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,13 +993,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a28d08d7ff56f194ab4774027e334f2c, type: 3}
+>>>>>>> 770fca1b8fe04d5df6dcbe76ba1df17b5e9e76f4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+<<<<<<< HEAD
+  - {fileID: 1867650528}
+  - {fileID: 267698300}
+=======
   - {fileID: 1615658129}
   - {fileID: 2064438814}
   - {fileID: 1090506014}
   - {fileID: 1452375703}
   - {fileID: 453160544}
+>>>>>>> 770fca1b8fe04d5df6dcbe76ba1df17b5e9e76f4

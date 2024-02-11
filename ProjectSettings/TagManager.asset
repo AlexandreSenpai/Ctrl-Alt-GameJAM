@@ -4,12 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Environment
   - InteractionTextUI
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Environment
   - Water
   - UI
   - 
