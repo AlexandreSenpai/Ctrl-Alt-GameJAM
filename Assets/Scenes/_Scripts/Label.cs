@@ -69,6 +69,14 @@ public class Label : MonoBehaviour {
         labelGUI.GetComponent<RectTransform>().anchoredPosition = worldObjectScreenPosition;
     }
 
+    public void Unactivate() {
+        this.labelGUI.SetActive(false);
+    }
+
+    public void Activate() {
+        this.labelGUI.SetActive(true);
+    }
+
     private void UpdateLabelText() {
         this.textMeshPro.text = this.text;
     }

@@ -2,12 +2,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Interaction : MonoBehaviour
+public class Interaction<T> : MonoBehaviour
 {
     [SerializeField] public string interactionText;
     [SerializeField] public KeyCode interactionKey;
     [SerializeField] public byte distanceToInteract;
-    [SerializeField] public UnityEvent events;
+    [SerializeField] public UnityEvent<T> events;
     private Transform player;
     private Label label;
 
@@ -19,29 +19,33 @@ public class Interaction : MonoBehaviour
         }
 
         this.player = playerObj.transform;
-        
+        this.InitializeLabel();
+    }
+
+    private void InitializeLabel() {
         GameObject labelObject = new GameObject("Label");
         labelObject.AddComponent<Label>();
         labelObject.transform.SetParent(this.transform);
-
         this.label = labelObject.GetComponent<Label>();
     }
 
-    void Update() {
+    public Label GetLabel() {
+        return this.label;
+    }
 
+    public bool Interacted() {
+        if (Input.GetKeyDown(this.interactionKey)) return true;
+        return false;
+    }
+
+    public void ShowLabelIfEntityIsClose() {        
         if(this.player == null) return;
         
-        if (Vector2.Distance(player.position, transform.position) > distanceToInteract) {
+        if (Vector2.Distance(player.position, transform.position) > distanceToInteract || this.label.gameObject.activeSelf == false) {
             this.label.SetLabelText(null);
             return;
         }
 
         this.label.SetLabelText(this.interactionText);
-
-        if (Input.GetKeyDown(this.interactionKey)) {
-            // Chama os eventos registrados na lista de eventos
-            if(events == null) return; 
-            events.Invoke();
-        }
     }
 }
