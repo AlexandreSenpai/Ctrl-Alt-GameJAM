@@ -4,27 +4,43 @@ using UnityEngine.Events;
 
 public class Interaction : MonoBehaviour
 {
-    [SerializeField] UnityEvent events;
-    Transform player;
-    TMP_Text UIText;
-
-    byte distanceToInteract = 2; 
-    float distanceToPlayer;
+    [SerializeField] public string interactionText;
+    [SerializeField] public KeyCode interactionKey;
+    [SerializeField] public byte distanceToInteract;
+    [SerializeField] public UnityEvent events;
+    private Transform player;
+    private Label label;
 
     void Start() {
-        player = GameObject.FindWithTag("Player").transform;
-        UIText = GameObject.FindWithTag("InteractionTextUI").GetComponent<TextMeshProUGUI>();
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj == null) {
+            Debug.LogError("Could not find any object with 'Player' Tag");
+            return;
+        }
+
+        this.player = playerObj.transform;
+        
+        GameObject labelObject = new GameObject("Label");
+        labelObject.AddComponent<Label>();
+        labelObject.transform.SetParent(this.transform);
+
+        this.label = labelObject.GetComponent<Label>();
     }
 
     void Update() {
-        distanceToPlayer = Vector3.Distance(player.position, transform.position);  
-        if (distanceToPlayer > distanceToInteract) {
-            UIText.text = null;
+
+        if(this.player == null) return;
+        
+        if (Vector2.Distance(player.position, transform.position) > distanceToInteract) {
+            this.label.SetLabelText(null);
             return;
         }
-        UIText.text = "E para Interagir";
-        if (Input.GetKeyDown("e")) {
+
+        this.label.SetLabelText(this.interactionText);
+
+        if (Input.GetKeyDown(this.interactionKey)) {
             // Chama os eventos registrados na lista de eventos
+            if(events == null) return; 
             events.Invoke();
         }
     }

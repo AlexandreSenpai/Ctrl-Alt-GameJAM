@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Environment
   - InteractionTextUI
+  - Collectable
+  - UI
   layers:
   - Default
   - TransparentFX
