@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandleMoveInput : MonoBehaviour {
+public class HandleInput : MonoBehaviour {
 
     private MoveController controller;
 

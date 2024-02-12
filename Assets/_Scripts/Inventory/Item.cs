@@ -12,4 +12,11 @@ public class Item : MonoBehaviour
         label.Unactivate();
     }
 
+    public void Activate() {
+        this.transform.gameObject.SetActive(true);
+        ItemInteraction interactionLabel = GetComponent<ItemInteraction>();
+        Label label = interactionLabel.GetLabel();
+        label.Activate();
+    }
+
 }

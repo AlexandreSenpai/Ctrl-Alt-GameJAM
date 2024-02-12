@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public class Slot {
-    private Item item;
+    private Item item = null;
 
     public bool IsEmpty() {
         return this.item == null;
@@ -13,11 +13,20 @@ public class Slot {
     public void AddItem(Item item) {
         this.item = item;
     }
+
+    public Item GetItem() {
+        return this.item;
+    }
+
+    public void RemoveItem() {
+        this.item = null;
+    }
 }
 
 public class Inventory : MonoBehaviour
 {
     private List<Slot> slots = new List<Slot>();
+    public int currentSlot = 0;
 
     void Start() {
         for(int i = 1; i <= 8; i++) {
@@ -31,6 +40,10 @@ public class Inventory : MonoBehaviour
 
     public Slot LastSlot() {
         return this.slots.Last();
+    }
+
+    public Slot GetSlot(int index) {
+        return this.slots[index];
     }
 
     public void AddItemNextEmptySlot(Item item) {

@@ -38,10 +38,18 @@ public class Interaction<T> : MonoBehaviour
         return false;
     }
 
+    public bool PlayerIsClose() {
+        if (Vector2.Distance(player.position, transform.position) > distanceToInteract) {
+            this.label.SetLabelText(null);
+            return false;
+        }
+        return true;
+    }
+
     public void ShowLabelIfEntityIsClose() {        
         if(this.player == null) return;
         
-        if (Vector2.Distance(player.position, transform.position) > distanceToInteract || this.label.gameObject.activeSelf == false) {
+        if (!this.PlayerIsClose() || this.label.gameObject.activeSelf == false) {
             this.label.SetLabelText(null);
             return;
         }

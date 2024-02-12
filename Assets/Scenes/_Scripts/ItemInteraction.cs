@@ -5,11 +5,14 @@ using UnityEngine;
 public class ItemInteraction : Interaction<Item> {
 
     public void UnactivateItem(Item item) {
-        if(item == null || item == null) return;
+        if(item == null) return;
         item.Unactivate();
     }
 
     void Update() {
+
+        if(!this.PlayerIsClose()) return;
+
         this.ShowLabelIfEntityIsClose();
 
         if(this.Interacted()) {
