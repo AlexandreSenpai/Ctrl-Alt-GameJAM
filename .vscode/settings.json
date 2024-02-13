@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "FUNCIONA.sln"
+    "dotnet.defaultSolution": "Ghost que deu certo.sln"
 }
