@@ -13,9 +13,7 @@ namespace BBUnity.Actions
         [InParam("Entity")]
         [Help("Entity object")]
         public GameObject entity;
-
-        private float radius = 3.0f;
-
+        private float radius = 1f;
         private MoveController entityMoveScript;
         private Vector2 targetPosition;
 
@@ -25,7 +23,7 @@ namespace BBUnity.Actions
             float x = r * Mathf.Cos(theta);
             float y = r * Mathf.Sin(theta);
 
-            targetPosition = new Vector2(x, y);
+            targetPosition = new Vector2(this.entity.transform.position.x + x, this.entity.transform.position.y + y);
         }
 
         public override void OnStart()
@@ -34,22 +32,20 @@ namespace BBUnity.Actions
             ChooseNextPosition();
         }
 
-        public override TaskStatus OnUpdate()
-        {
+        public override TaskStatus OnUpdate() {
             if (entityMoveScript == null) return TaskStatus.FAILED;
 
             MoveStatus result = entityMoveScript.Move(targetPosition);
 
-            Debug.Log(result);
-
             if (result == MoveStatus.COMPLETED || result == MoveStatus.BLOCKED)
             {
-                this.ChooseNextPosition();
+                ChooseNextPosition();
                 return TaskStatus.COMPLETED;
             }
 
             return TaskStatus.RUNNING;
         }
+
 
     }
 }
