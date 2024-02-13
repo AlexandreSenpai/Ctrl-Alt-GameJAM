@@ -10,12 +10,12 @@ public class HandleInput : MonoBehaviour {
         this.controller = this.gameObject.GetComponent<MoveController>();
     }
 
-    void FixedUpdate() {
+    void Update() {
         if(this.controller != null && this.controller.IsBeingControlledByHuman()) {
             float moveHorizontal = Input.GetAxisRaw("Horizontal");
             float moveVertical = Input.GetAxisRaw("Vertical");
             Vector2 movement = new Vector2(moveHorizontal, moveVertical).normalized;
-            this.controller.Move(Time.deltaTime * movement);
+            this.controller.Move(movement * Time.deltaTime);
         }
     }
 

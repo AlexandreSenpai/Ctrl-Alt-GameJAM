@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public enum MoveStatus {
+public enum MoveStatus
+{
     BLOCKED,
     COMPLETED,
     ONGOING
@@ -12,86 +10,68 @@ public enum MoveStatus {
 
 public class MoveController : MonoBehaviour
 {
-    
     [SerializeField]
-    public bool humanControlling = false;
+    private bool humanControlling = false;
 
     [SerializeField]
-    public float speed = 5.0f;
+    private float speed = 5.0f;
 
     [SerializeField]
     private LayerMask wallLayer;
 
-    private Rigidbody2D rb;
-
-    private List<Vector2> lastFiveSteps = new List<Vector2>();
-
-    void Start() {
-        rb = GetComponent<Rigidbody2D>();
-    }
+    private Vector2 targetPosition;
 
     public void TakeControl() {
-        this.humanControlling = true;
+        humanControlling = true;
     }
 
     public bool IsBeingControlledByHuman() {
-        return this.humanControlling;
+        return humanControlling;
     }
 
-    public MoveStatus TranslateTo(Vector2 position) {
-        this.transform.Translate(this.speed * position);
+    private Vector2 GetEntitySpriteSize() {
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        Vector2 spriteSize = spriteRenderer.sprite.bounds.size;
+        return new Vector2(spriteSize.x * transform.localScale.x, spriteSize.y * transform.localScale.y);
+    }
+
+    private MoveStatus TranslateTo(Vector2 movement) {
+        Vector2 nextPosition = transform.position + (Vector3)movement * this.speed;
+        if (Physics2D.OverlapBox(nextPosition, this.GetEntitySpriteSize(), 0f, wallLayer) && !this.gameObject.CompareTag("Player")) return MoveStatus.BLOCKED;
+        transform.position = nextPosition;
         return MoveStatus.COMPLETED;
     }
+    private MoveStatus MoveTo(Vector2 position) {
+        Vector2 currentPos = transform.position;
 
-    public MoveStatus MoveTo(Vector2 position) {
-        if (!CanMove(position)) return MoveStatus.BLOCKED;
+        Vector2 directionToTarget = (position - currentPos).normalized;
 
-        if(this.lastFiveSteps.Count >= 100) {
-            Debug.Log(this.lastFiveSteps.First());
-            Debug.Log(this.lastFiveSteps.Last());
-            if (Vector2.Distance(this.lastFiveSteps.First(), this.lastFiveSteps.Last()) < 1f) {
-                this.lastFiveSteps.Clear();
-                return MoveStatus.BLOCKED;
-            }
+        float distanceToTarget = Vector2.Distance(currentPos, position);
+
+        Debug.DrawRay(currentPos, directionToTarget * distanceToTarget, Color.cyan, 2f);
+
+        Vector2 nextPosition = Vector2.MoveTowards(currentPos, position, this.speed * Time.deltaTime);
+
+        if (Physics2D.OverlapBox(nextPosition, this.GetEntitySpriteSize(), 0f, wallLayer)) {
+            Debug.DrawRay(currentPos, directionToTarget * distanceToTarget, Color.red, 2f);
+            return MoveStatus.BLOCKED;
         }
-
-        rb.MovePosition(Vector2.MoveTowards(rb.position, position, this.speed * Time.deltaTime));
         
-        this.lastFiveSteps.Add(this.rb.position);
+        this.transform.position = nextPosition;
 
-        if(Vector2.Distance(rb.position, position) > 0.1f) return MoveStatus.ONGOING;
+        if(Vector2.Distance(currentPos, position) > .2f) return MoveStatus.ONGOING;
 
+        Debug.DrawRay(currentPos, directionToTarget * distanceToTarget, Color.green, 2f);
         return MoveStatus.COMPLETED;
     }
 
-    private RaycastHit2D CreateRayCast(Vector2 direction) {
-        return Physics2D.Raycast(rb.position, direction, .8f, wallLayer);
-    }
-    private void DrawFacingRayCast(Vector2 facingTo, Color color) {
-        Debug.DrawRay(rb.position, facingTo, color);
-    }
-
-    private bool CanMove(Vector2 direction)
-    {
-        RaycastHit2D hit = this.CreateRayCast(direction);
-
-        if (hit.collider != null)
-        {
-            this.DrawFacingRayCast(direction.normalized * hit.distance, Color.green);
-            return false;
-        }
-
-        this.DrawFacingRayCast(direction.normalized * .8f, Color.red);
-        return true;
-    }
-
-    public MoveStatus Move(Vector2 position) {
-
-        if(!this.humanControlling) {
-            return this.MoveTo(position);
+    
+    public MoveStatus Move(Vector2 movement) {
+        if (humanControlling) {
+            return TranslateTo(movement);
         } else {
-            return this.TranslateTo(position);
+            return MoveTo(movement);
         }
-
     }
+
 }

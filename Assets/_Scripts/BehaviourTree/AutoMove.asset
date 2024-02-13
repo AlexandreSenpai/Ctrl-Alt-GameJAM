@@ -29,7 +29,7 @@ MonoBehaviour:
     <child>\r\n              <SequenceNode id=\"7\" />\r\n            </child>\r\n         
     </GuardAndNode>\r\n        </elem>\r\n      </children>\r\n      <inputParams
     />\r\n      <outputParams />\r\n      <localParams />\r\n    </PrioritySelectorNode>\r\n   
-    <ConditionEvalNode id=\"8\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"Checkers/MachineCanMoveEntity\">\r\n     
+    <ConditionEvalNode id=\"8\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\" name=\"Checkers/MachineCanMoveEntity\">\r\n     
     <inputParams>\r\n        <inputValues>\r\n          <entry name=\"Entity\" type=\"UnityEngine.GameObject\"
     isBlackboard=\"True\" blackboard=\"Entity\" />\r\n        </inputValues>\r\n     
     </inputParams>\r\n      <outputParams />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n   
@@ -57,30 +57,30 @@ MonoBehaviour:
     id=\"8\" />\r\n          <ActionNode id=\"5\" />\r\n          <ActionNode id=\"6\"
     />\r\n        </nodes>\r\n      </_nodes>\r\n    </BehaviorTree>\r\n    <RepeatDecorator
     id=\"1\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"713.8885 142.0002\" name=\"Repeat\" description=\"Repeats the execution
+    position=\"563.8884 132.0002\" name=\"Repeat\" description=\"Repeats the execution
     of its child node\" cardinality=\"1\" hasParent=\"False\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <RepeatDecorator id=\"1\" />\r\n        </data>\r\n     
     </_data>\r\n    </RepeatDecorator>\r\n    <PrioritySelectorNode id=\"2\">\r\n     
-    <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"659.8886
-    263.3329\" name=\"Priority Selector\" description=\"\" cardinality=\"1\" hasParent=\"True\">\r\n         
+    <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"509.8885
+    253.3329\" name=\"Priority Selector\" description=\"\" cardinality=\"1\" hasParent=\"True\">\r\n         
     <BehaviorTree id=\"0\" />\r\n          <PrioritySelectorNode id=\"2\" />\r\n         
     <RepeatDecorator id=\"1\" />\r\n        </data>\r\n      </_data>\r\n    </PrioritySelectorNode>\r\n   
     <ConditionEvalNode id=\"8\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"False\" position=\"654.8885 404.9992\" name=\"Checkers/MachineCanMoveEntity\"
+    selected=\"False\" position=\"504.8884 394.9992\" name=\"Checkers/MachineCanMoveEntity\"
     description=\"Eval\" cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <ConditionEvalNode id=\"8\" />\r\n          <PrioritySelectorNode
     id=\"2\" />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n   
     <SequenceNode id=\"7\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"654.8885 404.9992\" name=\"Sequence\" description=\"Executes all its
+    position=\"504.8884 394.9992\" name=\"Sequence\" description=\"Executes all its
     children in sequence until all of them are successful\" cardinality=\"-1\" hasParent=\"False\">\r\n         
     <BehaviorTree id=\"0\" />\r\n          <SequenceNode id=\"7\" />\r\n        </data>\r\n     
     </_data>\r\n    </SequenceNode>\r\n    <ActionNode id=\"5\">\r\n      <_data>\r\n       
-    <data breakpoint=\"0\" selected=\"True\" position=\"542.8889 614.9991\" name=\"WaitNUpdates\"
+    <data breakpoint=\"0\" selected=\"True\" position=\"392.889 604.9991\" name=\"WaitNUpdates\"
     description=\"Action that successes after N updates (param Count).\" cardinality=\"0\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ActionNode
     id=\"5\" />\r\n          <SequenceNode id=\"7\" />\r\n        </data>\r\n     
     </_data>\r\n    </ActionNode>\r\n    <ActionNode id=\"6\">\r\n      <_data>\r\n       
-    <data breakpoint=\"0\" selected=\"False\" position=\"804.8886 618.9993\" name=\"Movement/HandleAutoMove\"
+    <data breakpoint=\"0\" selected=\"False\" position=\"654.8885 608.9993\" name=\"Movement/HandleAutoMove\"
     description=\"\" cardinality=\"0\" hasParent=\"True\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <ActionNode id=\"6\" />\r\n          <SequenceNode id=\"7\"
     />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n  </editorInfo>\r\n</BehaviorBricks>"
