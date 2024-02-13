@@ -83,4 +83,24 @@ public class Label : MonoBehaviour {
         if(parent == null) return;
         this.FollowPosition(this.parent.position);
     }
+
+    public void ShowLabelIfEntityIsClose(GameObject entity, string label, float distance) {        
+        if(entity == null) return;
+        
+        if (!EntityIsClose(entity, distance)) {
+            UpdateLabelText(null);
+            return;
+        }
+
+        UpdateLabelText(label);
+    }
+
+    public bool EntityIsClose(GameObject entity, float distance) {
+        if (Vector2.Distance(entity.transform.position, transform.position) > distance) {
+            UpdateLabelText(null);
+            return false;
+        }
+        return true;
+    }
+    
 }

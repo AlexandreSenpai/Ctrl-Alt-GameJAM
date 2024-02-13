@@ -25,6 +25,10 @@ public class MoveController : MonoBehaviour
         humanControlling = true;
     }
 
+    public void ReleaseControl() {
+        this.humanControlling = false;
+    }
+
     public bool IsBeingControlledByHuman() {
         return humanControlling;
     }
