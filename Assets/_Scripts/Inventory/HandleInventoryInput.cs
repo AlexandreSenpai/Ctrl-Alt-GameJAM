@@ -5,16 +5,17 @@ using UnityEngine;
 public class HandleInventoryInput : MonoBehaviour
 {
     InventoryController controller;
-    void Start()
-    {
+    void Start() {
         this.controller = GetComponent<InventoryController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(this.controller.DropItemKey)) {
+        if(Input.GetButtonDown("Drop Item Key")) {
             this.controller.DropItem();
+            return;
         }
+
     }
 }

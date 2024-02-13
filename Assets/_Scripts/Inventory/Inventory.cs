@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[System.Serializable]
 public class Slot {
     private Item item = null;
 
@@ -26,27 +27,33 @@ public class Slot {
 public class Inventory : MonoBehaviour
 {
     private List<Slot> slots = new List<Slot>();
-    public int currentSlot = 0;
 
     void Start() {
-        for(int i = 1; i <= 8; i++) {
-            this.slots.Add(new Slot());
-        }
+        this.slots.Add(new Slot());
     }
 
-    public Slot FirstSlot() {
+    public Slot GetSlot() {
         return this.slots.First();
     }
 
-    public Slot LastSlot() {
-        return this.slots.Last();
+    private void UpdateItemPosition(Item item, Vector2 position) {
+        item.transform.position = position;
     }
 
-    public Slot GetSlot(int index) {
-        return this.slots[index];
-    }
+    public bool DropItem() {
+        Slot slot = this.GetSlot();
+        
+        if(slot.IsEmpty()) return false;
 
-    public void AddItemNextEmptySlot(Item item) {
+        Item item = slot.GetItem();
+        this.UpdateItemPosition(item, this.transform.position);
+        slot.RemoveItem();
+        item.Activate();
+        
+        return true;
+    } 
+
+    public bool AddItemNextEmptySlot(Item item) {
 
         bool added = false;
 
@@ -60,11 +67,12 @@ public class Inventory : MonoBehaviour
 
         if(!added) {
             Debug.LogWarning("There's no empty slot available to add this item");
-            return;
+            return added;
         }
   
+        item.Unactivate();
         Debug.Log($"Added {item.name} to the slot!");
-
+        return added;
     }
 
 }

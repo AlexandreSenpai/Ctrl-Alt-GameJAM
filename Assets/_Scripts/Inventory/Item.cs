@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-
     public void Unactivate() {
         this.transform.gameObject.SetActive(false);
         ItemInteraction interactionLabel = GetComponent<ItemInteraction>();
         Label label = interactionLabel.GetLabel();
+        label.UpdateLabelText(null);
         label.Unactivate();
     }
 
     public void Activate() {
-        this.transform.gameObject.SetActive(true);
         ItemInteraction interactionLabel = GetComponent<ItemInteraction>();
         Label label = interactionLabel.GetLabel();
         label.Activate();
+        this.transform.gameObject.SetActive(true);
     }
 
 }

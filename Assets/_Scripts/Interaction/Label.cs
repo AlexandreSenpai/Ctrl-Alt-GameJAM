@@ -47,14 +47,9 @@ public class Label : MonoBehaviour {
         rectTransform.sizeDelta = new Vector2(200, 50);
     }
 
-    public void SetLabelText(string newText) {
-        if(newText == "" || newText?.Length > 50) return;
-        this.text = newText;
-    }
-
-    public void FollowPosition(Vector2 worldPosition) {
+    public bool FollowPosition(Vector2 worldPosition) {
         Camera mainCamera = Camera.main;
-        if (mainCamera == null) return;
+        if (mainCamera == null) return false;
 
         float objectHeight = parent.GetComponentInChildren<SpriteRenderer>().bounds.size.y + .2f;
         Vector3 adjustedPosition = worldPosition + new Vector2(0, objectHeight);
@@ -67,6 +62,7 @@ public class Label : MonoBehaviour {
         ((viewportPosition.y * canvasRectTransform.sizeDelta.y) - (canvasRectTransform.sizeDelta.y * 0.5f)));
 
         labelGUI.GetComponent<RectTransform>().anchoredPosition = worldObjectScreenPosition;
+        return true;
     }
 
     public void Unactivate() {
@@ -77,13 +73,14 @@ public class Label : MonoBehaviour {
         this.labelGUI.SetActive(true);
     }
 
-    private void UpdateLabelText() {
+    public void UpdateLabelText(string newText) {
+        if(newText == "" || newText?.Length > 50) return;
+        this.text = newText;
         this.textMeshPro.text = this.text;
     }
 
     void Update() {
         if(parent == null) return;
-        this.UpdateLabelText();
         this.FollowPosition(this.parent.position);
     }
 }

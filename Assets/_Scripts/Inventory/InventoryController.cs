@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {   
-
-    [SerializeField]
-    public KeyCode GetItemKey;
-    [SerializeField]
-    public KeyCode DropItemKey;
-    Inventory inventory;
+    private Inventory inventory;
 
     void Start() {
         this.inventory = GetComponent<Inventory>();
@@ -20,15 +15,7 @@ public class InventoryController : MonoBehaviour
     }
 
     public void DropItem() {
-        Slot slot = this.inventory.GetSlot(this.inventory.currentSlot);
-        
-        if(slot.IsEmpty()) return;
-
-        Item item = slot.GetItem();
-        item.transform.position = this.transform.position;
-        item.Activate();
-
-        slot.RemoveItem();
+        this.inventory.DropItem();
     }
 
 }

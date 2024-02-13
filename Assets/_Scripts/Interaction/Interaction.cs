@@ -4,8 +4,7 @@ using UnityEngine.Events;
 
 public class Interaction<T> : MonoBehaviour
 {
-    [SerializeField] public string interactionText;
-    [SerializeField] public KeyCode interactionKey;
+    private string interactionText = "Aperte 'E' para interagir";
     [SerializeField] public byte distanceToInteract;
     [SerializeField] public UnityEvent<T> events;
     private Transform player;
@@ -34,13 +33,13 @@ public class Interaction<T> : MonoBehaviour
     }
 
     public bool Interacted() {
-        if (Input.GetKeyDown(this.interactionKey)) return true;
+        if (Input.GetButtonDown("Interact Key")) return true;
         return false;
     }
 
     public bool PlayerIsClose() {
         if (Vector2.Distance(player.position, transform.position) > distanceToInteract) {
-            this.label.SetLabelText(null);
+            this.label.UpdateLabelText(null);
             return false;
         }
         return true;
@@ -50,10 +49,10 @@ public class Interaction<T> : MonoBehaviour
         if(this.player == null) return;
         
         if (!this.PlayerIsClose() || this.label.gameObject.activeSelf == false) {
-            this.label.SetLabelText(null);
+            this.label.UpdateLabelText(null);
             return;
         }
 
-        this.label.SetLabelText(this.interactionText);
+        this.label.UpdateLabelText(this.interactionText);
     }
 }
